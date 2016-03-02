@@ -1,2 +1,8 @@
----
-# tasks file for insspb.php-fpm
+- include: pkg-CentOs.yml
+  when: ( "{{ php_fpm_install_method }}" == "package"
+        and "{{ ansible_os_family }}"  == "RedHat")
+
+- include: pkg-Debian.yml
+  when: ( "{{ php_fpm_install_method }}" == "package"
+        and "{{ ansible_distribution }}" == "Ubuntu"
+        or "{{ ansible_distribution }}" == "Debian")

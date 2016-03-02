@@ -1,0 +1,7 @@
+- name: PHP-FPM | Make sure nginx is installed (package)
+  yum:
+    name: php-fpm
+    state: present
+    update_cache: yes
+  notify:
+    - restart nginx
