@@ -1,2 +1,5 @@
 ---
-# handlers file for insspb.php-fpm
+- name: PHP-FPM | Handlers | Service restart
+  service:
+    state: restarted
+    name: "{{ php-fpm_service_name }}"
