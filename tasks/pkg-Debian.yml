@@ -1,42 +1,42 @@
-- name: PHP-FPM | Make sure the ansible required dependencies are installed
+- name: PHP-FPM | Debian | Install | Make sure the ansible required dependencies are installed
   become: yes
   become_method: su
   apt:
     pkg: python-pycurl
     state: present
 
-- name: PHP-FPM | Add the nginx repository key
+- name: PHP-FPM | Debian | Install | Add the nginx repository key
   become: yes
   become_method: su
   apt_key:
     url: http://nginx.org/keys/nginx_signing.key
     state: present
 
-- name: PHP-FPM | Add the nginx repository
+- name: PHP-FPM | Debian | Install | Add the nginx repository
   apt_repository:
     repo: "deb http://nginx.org/packages/{{ ansible_distribution | lower }}/ {{ ansible_distribution_release }} nginx"
     state: present
 
-- name: PHP-FPM | Add the nginx src repository
+- name: PHP-FPM | Debian | Install | Add the nginx src repository
   become: yes
   become_method: su
   apt_repository:
     repo: "deb-src http://nginx.org/packages/{{ ansible_distribution | lower }}/ {{ ansible_distribution_release }} nginx"
     state: present
 
-- name: PHP-FPM | Update apt cache with new repo data
+- name: PHP-FPM | Debian | Install | Update apt cache with new repo data
   become: yes
   become_method: su
   apt: 
     update_cache: yes
 
-- name: PHP-FPM | Make sure nginx is installed (package)
+- name: PHP-FPM | Debian | Install | Make sure nginx is installed (package)
   become: yes
   become_method: su
   apt:
     pkg: nginx
     state: latest
   notify:
-    - restart nginx
+    - PHP-FPM | Handlers | Service restart
 
 - include: directories.yml
