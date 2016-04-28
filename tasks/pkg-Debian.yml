@@ -5,38 +5,17 @@
     pkg: python-pycurl
     state: present
 
-- name: PHP-FPM | Debian | Install | Add the nginx repository key
-  become: yes
-  become_method: su
-  apt_key:
-    url: http://nginx.org/keys/nginx_signing.key
-    state: present
-
-- name: PHP-FPM | Debian | Install | Add the nginx repository
-  apt_repository:
-    repo: "deb http://nginx.org/packages/{{ ansible_distribution | lower }}/ {{ ansible_distribution_release }} nginx"
-    state: present
-
-- name: PHP-FPM | Debian | Install | Add the nginx src repository
-  become: yes
-  become_method: su
-  apt_repository:
-    repo: "deb-src http://nginx.org/packages/{{ ansible_distribution | lower }}/ {{ ansible_distribution_release }} nginx"
-    state: present
-
 - name: PHP-FPM | Debian | Install | Update apt cache with new repo data
   become: yes
   become_method: su
   apt: 
     update_cache: yes
 
-- name: PHP-FPM | Debian | Install | Make sure nginx is installed (package)
+- name: PHP-FPM | Debian | Install | Make sure php-fpm is installed (package)
   become: yes
   become_method: su
   apt:
-    pkg: nginx
+    pkg: php5-fpm
     state: latest
   notify:
     - PHP-FPM | Handlers | Service restart
-
-- include: directories.yml
